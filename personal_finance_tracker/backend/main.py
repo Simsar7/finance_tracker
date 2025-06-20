@@ -38,7 +38,8 @@ app.include_router(notification.router, prefix="/notifications", tags=["notifica
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://finance-tracker.vercel.app",  # Vercel production URL (change if needed)
+    "https://finance-tracker.vercel.app",
+    "https://finance-tracker-rouge-ten.vercel.app",  # 👈 Add your deployed domain
 ]
 
 app.add_middleware(
