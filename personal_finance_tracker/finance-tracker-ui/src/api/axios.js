@@ -2,18 +2,19 @@
 
 import axios from "axios";
 
+// Use environment variable or fallback to localhost
 const api = axios.create({
-  baseURL: "http://localhost:8000", // full URL
+  baseURL: process.env.REACT_APP_API || "http://localhost:8000",
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // only if FastAPI allows credentials
+  withCredentials: true, // use only if needed
 });
 
 // Attach JWT to headers
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); // Make sure you use the same key when storing
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
