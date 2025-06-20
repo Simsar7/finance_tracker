@@ -1,0 +1,22 @@
+# Ignore node_modules globally
+node_modules/
+finance-tracker-ui/node_modules/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files
+.env
+.env.*
+
+# OS and IDE junk
+.DS_Store
+.vscode/
+*.log
+
+# Build output
+/build
+/dist
