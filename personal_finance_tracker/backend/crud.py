@@ -47,7 +47,7 @@ def authenticate_user(db: Session, identifier: str, password: str) -> Optional[m
     user = get_user_by_identifier(db, identifier)
     if not user:
         return None
-    if not pwd_context.verify(password, user.password):
+    if not pwd_context.verify(password, user.hashed_password):
         return None
     return user
 
