@@ -51,11 +51,12 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
             raise HTTPException(status_code=401, detail="Invalid credentials")
 
         access_token = create_access_token(data={"sub": user.username})
-        print(f"Generated access token: {access_token}")
-
         return {"access_token": access_token, "token_type": "bearer"}
 
-    except Exception as e:
-        import traceback
-        traceback.print_exc()  # This prints full error trace to console/log
+    except HTTPException as http_exc:
+        # Let 401 and 404 errors pass through
+        raise http_exc
+
+    except Exception:
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail="Internal Server Error")
