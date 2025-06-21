@@ -35,21 +35,20 @@ app.include_router(savings.router, prefix="/savings", tags=["savings"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["dashboard"])
 app.include_router(notification.router, prefix="/notifications", tags=["notifications"])
 
+# In your FastAPI app (main.py)
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://finance-tracker.vercel.app",
-    "https://finance-tracker-rouge-ten.vercel.app",  # 👈 Add your deployed domain
+    "https://finance-tracker-rouge-ten.vercel.app",  # Add this exact URL
+    "https://finance-tracker-c39ob5isq-simsars-projects.vercel.app",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # You can also use ["*"] during development
-    allow_credentials=True,
+    allow_origins=origins,
+    allow_credentials=True,  # Required for cookies/tokens
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
 )
-
 
 
 def custom_openapi():
