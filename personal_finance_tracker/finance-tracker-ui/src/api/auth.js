@@ -1,7 +1,7 @@
 import api from "./axios";
 import qs from "qs";
 
-// Login expects { username, password }
+// ✅ Login function using application/x-www-form-urlencoded (required for OAuth2PasswordRequestForm)
 export const loginUser = async (username, password) => {
   try {
     const response = await api.post(
@@ -16,28 +16,24 @@ export const loginUser = async (username, password) => {
     console.log("Login response data:", response.data);
     return response.data;
   } catch (error) {
+    console.error("Login error:", error);
     throw error;
   }
 };
 
-// Signup expects { username, email, password }
+// ✅ Signup function using JSON and Axios (DO NOT use fetch here)
 export const signupUser = async (userData) => {
-  const response = await fetch("http://localhost:8000/auth/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json", // ✅ must be application/json
-    },
-    body: JSON.stringify({
+  try {
+    const response = await api.post("/auth/signup", {
       username: userData.username,
       password: userData.password,
-      email: userData.email, // ✅ This is required
-    }),
-  });
+      email: userData.email,
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.detail || "Signup failed");
+    console.log("Signup response data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Signup error:", error);
+    throw error;
   }
-
-  return await response.json();
 };
