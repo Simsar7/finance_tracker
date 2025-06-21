@@ -20,8 +20,12 @@ Base = declarative_base()
 
 # Dependency for DB session
 def get_db():
-    db = SessionLocal()
     try:
+        db = SessionLocal()
+        print("✅ Database session created")
         yield db
+    except Exception as e:
+        print("❌ Error creating DB session:", str(e))
+        raise
     finally:
         db.close()
