@@ -4,7 +4,7 @@ import axios from "axios";
 
 // Use environment variable or fallback to localhost
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API || "http://localhost:8000",
+  baseURL: "https://finance-tracker-87ov.onrender.com",  // ✅ Set your Render backend here
   headers: {
     "Content-Type": "application/json",
   },
