@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 import {
   FiDollarSign,
@@ -13,6 +12,7 @@ import {
   FiX
 } from "react-icons/fi";
 import { motion } from "framer-motion";
+import api from "../../services/api"; // Assuming you have an api service configured
 
 const DashboardHome = () => {
   const location = useLocation();
@@ -29,7 +29,7 @@ const DashboardHome = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      setError("");
 
       const params = {
         start_date: dateRange.start.toISOString().split('T')[0],
@@ -37,13 +37,8 @@ const DashboardHome = () => {
       };
 
       const [dashboardResponse, savingsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/dashboard/`, {
-          params,
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get("http://localhost:8000/savings/", {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
+        api.get(`/dashboard/`, { params }),
+        api.get("/savings/")
       ]);
 
       const totalSavings = savingsResponse.data.reduce((acc, item) => {
