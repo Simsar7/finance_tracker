@@ -12,7 +12,8 @@ import {
   FiX
 } from "react-icons/fi";
 import { motion } from "framer-motion";
-import api from "../../services/api"; // Assuming you have an api service configured
+import api from "../../api/axios"; // ✅ Correct path
+ // Assuming you have an api service configured
 
 const DashboardHome = () => {
   const location = useLocation();
