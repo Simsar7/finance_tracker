@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Depends, HTTPException,status
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import uvicorn
 from typing import List, Optional
 from datetime import date
-from backend.routers import users,expense,income,report,savings,dashboard,borrow,lend,repayment 
+from backend.routers import users, expense, income, report, savings, dashboard, borrow, lend, repayment, notification
 from backend import models, schemas, crud
 from backend.database import SessionLocal, engine
 from backend.utils import get_current_user
@@ -12,18 +12,31 @@ from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
 from fastapi.security import OAuth2
 from fastapi.openapi.utils import get_openapi
-from backend.routers import report
-from backend.routers import notification
 
-# Create all tables in DB (if not exists)
-
-
+# Initialize app first
 app = FastAPI(title="Personal Finance Tracker API")
+
+# ✅ Move this BEFORE app.include_router
+origins = [
+    "https://finance-tracker-rouge-ten.vercel.app",
+    "https://finance-tracker-c39ob5isq-simsars-projects.vercel.app",
+    "https://finance-tracker-c1gp04xmo-simsars-projects.vercel.app",  # ✅ Add this one too!
+    "http://localhost:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 @app.on_event("startup")
 def startup_event():
     models.Base.metadata.create_all(bind=engine)
-    
+
+# ✅ Now include routers
 app.include_router(users.router, prefix="/auth", tags=["auth"])
 app.include_router(borrow.router, prefix="/borrows")
 app.include_router(lend.router, prefix="/lends")
@@ -35,22 +48,7 @@ app.include_router(savings.router, prefix="/savings", tags=["savings"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["dashboard"])
 app.include_router(notification.router, prefix="/notifications", tags=["notifications"])
 
-# In your FastAPI app (main.py)
-origins = [
-    "https://finance-tracker-rouge-ten.vercel.app",  # Add this exact URL
-    "https://finance-tracker-c39ob5isq-simsars-projects.vercel.app",
-    "http://localhost:3000"
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,  # Required for cookies/tokens
-    allow_methods=["*"],
-    allow_headers=["*"]
-)
-
-
+# Custom OpenAPI config
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
