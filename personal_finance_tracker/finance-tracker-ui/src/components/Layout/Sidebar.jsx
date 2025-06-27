@@ -32,7 +32,6 @@ const Sidebar = ({ isOpen, onClose, darkMode = false }) => {
     setOpenMenu(openMenu === menu ? null : menu);
   };
 
-  // Auto-close menu on mobile when clicking a link
   const handleLinkClick = () => {
     if (isMobile) {
       onClose();
@@ -108,7 +107,6 @@ const Sidebar = ({ isOpen, onClose, darkMode = false }) => {
     }
   ];
 
-  // Determine active path including sub-items
   const isActive = (path, subItems) => {
     if (path) return location.pathname === path;
     if (subItems) return subItems.some(subItem => location.pathname === subItem.path);
@@ -117,7 +115,6 @@ const Sidebar = ({ isOpen, onClose, darkMode = false }) => {
 
   return (
     <>
-      {/* Overlay for mobile */}
       {isOpen && isMobile && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
