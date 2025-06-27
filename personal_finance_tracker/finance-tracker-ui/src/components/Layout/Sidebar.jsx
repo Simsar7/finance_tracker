@@ -11,7 +11,8 @@ import {
   FileText,
   Bell as BellIcon,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  X
 } from "lucide-react";
 
 const Sidebar = ({ isOpen, onClose, darkMode = false }) => {
@@ -123,15 +124,26 @@ const Sidebar = ({ isOpen, onClose, darkMode = false }) => {
       )}
 
       <aside 
-        className={`fixed lg:static inset-y-0 left-0 w-64 h-screen p-4 z-30 transform transition-all duration-300 ease-in-out
+        className={`fixed lg:static inset-y-0 left-0 w-64 h-full p-4 z-30 transform transition-all duration-300 ease-in-out overflow-y-auto
           ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-800 shadow-md'}
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
-        <h2 className={`text-xl font-bold mb-6 ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-          Finance Tracker
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className={`text-xl font-bold ${darkMode ? 'text-blue-400' : 'text-blue-600'}`}>
+            Finance Tracker
+          </h2>
+          {isMobile && (
+            <button 
+              onClick={onClose}
+              className={`p-1 rounded-md ${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-200'}`}
+              aria-label="Close menu"
+            >
+              <X size={20} className={darkMode ? 'text-gray-300' : 'text-gray-600'} />
+            </button>
+          )}
+        </div>
         
-        <nav className="space-y-1">
+        <nav className="space-y-1 pb-4">
           {menuItems.map((item) => (
             <div key={item.name}>
               {item.path ? (
