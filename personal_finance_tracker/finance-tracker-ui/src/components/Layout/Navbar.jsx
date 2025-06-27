@@ -25,7 +25,6 @@ const Navbar = ({ onMenuClick, title = "Personal Finance Tracker", darkMode, tog
   const profileRef = useRef(null);
   const notificationsRef = useRef(null);
 
-  // Sample notifications data
   const [notifications, setNotifications] = useState([
     { id: 1, message: "Your monthly budget has been updated", read: false, time: "2 hours ago", type: "budget" },
     { id: 2, message: "New transaction recorded: $25.99 at Amazon", read: false, time: "1 day ago", type: "expense" },
@@ -34,11 +33,9 @@ const Navbar = ({ onMenuClick, title = "Personal Finance Tracker", darkMode, tog
   ]);
 
   useEffect(() => {
-    // Count unread notifications
     const count = notifications.filter(n => !n.read).length;
     setUnreadCount(count);
     
-    // Close menus when clicking outside
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setShowProfileMenu(false);
@@ -105,7 +102,6 @@ const Navbar = ({ onMenuClick, title = "Personal Finance Tracker", darkMode, tog
       </div>
       
       <div className="flex items-center gap-4 md:gap-6">
-        {/* Theme Toggle */}
         <button
           onClick={toggleDarkMode}
           className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
@@ -118,7 +114,6 @@ const Navbar = ({ onMenuClick, title = "Personal Finance Tracker", darkMode, tog
           )}
         </button>
 
-        {/* Notifications */}
         <div 
           ref={notificationsRef}
           className="relative"
@@ -218,7 +213,6 @@ const Navbar = ({ onMenuClick, title = "Personal Finance Tracker", darkMode, tog
           </AnimatePresence>
         </div>
 
-        {/* User Profile */}
         <div 
           ref={profileRef}
           className="relative"
