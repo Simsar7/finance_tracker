@@ -232,7 +232,7 @@ const ViewExpense = () => {
                   <option value="groceries">Groceries</option>
                   <option value="rent">Rent</option>
                   <option value="transport">Transport</option>
-                  <option value="utilities">Utilities</option>
+                  <option value="food">Food</option>
                   <option value="entertainment">Entertainment</option>
                   <option value="others">Others</option>
                 </select>
