@@ -8,7 +8,7 @@ const AddExpense = () => {
     category: "",
     amount: "",
     date: "",
-    notes: "",
+    description: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const AddExpense = () => {
     try {
       const response = await api.post("/expenses/", formData);
       setSuccess("Expense saved successfully!");
-      setFormData({ category: "", amount: "", date: "", notes: "" });
+      setFormData({ category: "", amount: "", date: "", description: "" });
     } catch (err) {
       setError(err.response?.data?.message || "Failed to save expense. Please try again.");
     } finally {
@@ -122,13 +122,13 @@ const AddExpense = () => {
             </div>
 
             <div>
-              <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-                Notes
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                description
               </label>
               <textarea
-                id="notes"
-                name="notes"
-                value={formData.notes}
+                id="description"
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
                 rows={3}
                 className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
