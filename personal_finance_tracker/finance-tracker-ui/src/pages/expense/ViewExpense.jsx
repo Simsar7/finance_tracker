@@ -12,7 +12,7 @@ const ViewExpense = () => {
     category: "",
     amount: "",
     date: "",
-    notes: "",
+    description: "",
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
@@ -62,7 +62,7 @@ const ViewExpense = () => {
       category: expense.category || "",
       amount: expense.amount || "",
       date: formatDateForInput(expense.date),
-      notes: expense.notes || expense.description || "",
+      description: expense.description || expense.description || "",
     });
   };
 
@@ -92,13 +92,13 @@ const ViewExpense = () => {
   };
 
   const convertToCSV = (data) => {
-    const headers = ["ID", "Category", "Amount", "Date", "Notes"];
+    const headers = ["ID", "Category", "Amount", "Date", "description"];
     const rows = data.map(expense => [
       expense.id,
       `"${expense.category}"`,
       expense.amount,
       `"${formatDateForDisplay(expense.date)}"`,
-      `"${(expense.notes || expense.description || "").replace(/"/g, '""')}"`
+      `"${(expense.description || expense.description || "").replace(/"/g, '""')}"`
     ]);
 
     return [
@@ -150,7 +150,7 @@ const ViewExpense = () => {
   };
 
   const filteredExpenses = expenses.filter((expense) => {
-    const matchesSearch = expense.notes?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = expense.description?.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          expense.category?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = filterCategory ? expense.category === filterCategory : true;
     
@@ -210,7 +210,7 @@ const ViewExpense = () => {
                   <input
                     type="text"
                     id="search"
-                    placeholder="Search notes or category..."
+                    placeholder="Search description or category..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="block w-full pl-10 pr-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
@@ -308,7 +308,7 @@ const ViewExpense = () => {
                         Date
                       </th>
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Notes
+                        description
                       </th>
                       <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Actions
@@ -368,8 +368,8 @@ const ViewExpense = () => {
                             </td>
                             <td className="px-6 py-4">
                               <textarea
-                                name="notes"
-                                value={editFormData.notes}
+                                name="description"
+                                value={editFormData.description}
                                 onChange={handleEditChange}
                                 rows={2}
                                 className="block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -414,7 +414,7 @@ const ViewExpense = () => {
                             </td>
                             <td className="px-6 py-4">
                               <div className="text-sm text-gray-500 max-w-xs truncate">
-                                {expense.notes || expense.description || "-"}
+                                {expense.description || expense.description || "-"}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
